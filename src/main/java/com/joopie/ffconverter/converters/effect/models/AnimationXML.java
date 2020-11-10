@@ -487,6 +487,7 @@ public class AnimationXML {
 
     private String name;
     private String desc;
+    private boolean resetOnToggle;
 
     private List<AnimationXML.DirectionOffset> directions;
     private List<AnimationXML.Shadow> shadows;
@@ -513,6 +514,15 @@ public class AnimationXML {
 
     public void setDesc(String desc) {
         this.desc = desc;
+    }
+
+    @XmlAttribute
+    public boolean getResetOnToggle() {
+        return resetOnToggle;
+    }
+
+    public void setResetOnToggle(boolean resetOnToggle) {
+        this.resetOnToggle = resetOnToggle;
     }
 
     @XmlElement(name = "direction")

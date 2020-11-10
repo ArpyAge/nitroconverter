@@ -517,6 +517,7 @@ public class EffectJSON {
 
         private String name;
         private String desc;
+        private boolean resetOnToggle;
 
         private List<EffectJSON.Animation.DirectionOffset> directions;
         private List<EffectJSON.Animation.Shadow> shadows;
@@ -541,6 +542,14 @@ public class EffectJSON {
 
         public void setDesc(String desc) {
             this.desc = desc;
+        }
+
+        public boolean getResetOnToggle() {
+            return resetOnToggle;
+        }
+
+        public void setResetOnToggle(boolean resetOnToggle) {
+            this.resetOnToggle = resetOnToggle;
         }
 
         public List<EffectJSON.Animation.DirectionOffset> getDirections() {

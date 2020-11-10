@@ -76,6 +76,7 @@ public class EffectJSONMapper {
         EffectJSON.Animation animation = new EffectJSON.Animation();
         animation.setName(animationXML.getName());
         animation.setDesc(animationXML.getDesc());
+        animation.setResetOnToggle(animationXML.getResetOnToggle());
         List<EffectJSON.Animation.Frame> frames = new ArrayList<EffectJSON.Animation.Frame>();
         List<EffectJSON.Animation.Avatar> avatars = new ArrayList<EffectJSON.Animation.Avatar>();
         List<EffectJSON.Animation.DirectionOffset> directions = new ArrayList<EffectJSON.Animation.DirectionOffset>();
