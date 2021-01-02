@@ -58,7 +58,7 @@ public class EffectConverter implements IConverter {
         ManifestXML manifestXML = this.getManifestXML(habboAssetSWF);
         AnimationXML animationXML = this.getAnimationXML(habboAssetSWF);
 
-        return effectJSONMapper.mapXML(habboAssetSWF.getDocumentClass(), manifestXML, animationXML);
+        return effectJSONMapper.mapXML(habboAssetSWF, manifestXML, animationXML);
     }
 
     @Override

@@ -207,8 +207,20 @@ public class AnimationXML {
     }
 
     public static class Frame {
+        private Integer repeats;
+
+        @XmlAttribute
+        public Integer getRepeats() {
+            return repeats;
+        }
+
+        public void setRepeats(Integer repeats) {
+            this.repeats = repeats;
+        }
+
         public static class Fx {
             private String id;
+            private Integer repeats;
             private Integer frame;
             private Integer dx;
             private Integer dy;

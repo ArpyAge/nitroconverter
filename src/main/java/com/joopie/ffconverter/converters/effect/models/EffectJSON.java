@@ -11,6 +11,7 @@ public class EffectJSON {
         @JsonIgnore
         private String name;
 
+        private String source;
         private Integer x;
         private Integer y;
 
@@ -20,6 +21,14 @@ public class EffectJSON {
 
         public void setName(String name) {
             this.name = name;
+        }
+
+        public String getSource() {
+            return source;
+        }
+
+        public void setSource(String source) {
+            this.source = source;
         }
 
         public Integer getX() {
@@ -263,6 +272,16 @@ public class EffectJSON {
         }
 
         public static class Frame {
+            private Integer repeats;
+
+            public Integer getRepeats() {
+                return repeats;
+            }
+
+            public void setRepeats(Integer repeats) {
+                this.repeats = repeats;
+            }
+
             public static class Fx {
                 private String id;
                 private Integer frame;

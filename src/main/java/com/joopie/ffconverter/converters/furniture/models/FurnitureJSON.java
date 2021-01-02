@@ -91,6 +91,27 @@ public class FurnitureJSON {
         }
     }
 
+    public static class Action {
+        private String link;
+        private Integer startState;
+
+        public String getLink() {
+            return link;
+        }
+
+        public void setLink(String link) {
+            this.link = link;
+        }
+
+        public Integer getStartState() {
+            return startState;
+        }
+
+        public void setStartState(Integer startState) {
+            this.startState = startState;
+        }
+    }
+
     public static class Visualization {
         public static class Layer {
             @JsonIgnore
@@ -633,6 +654,7 @@ public class FurnitureJSON {
     private JsonNode spritesheet;
 
     private Dimensions dimensions;
+    private Action action;
     private List<Integer> directions;
     private Map<String, Asset> assets;
     private List<Visualization> visualizations;
@@ -696,6 +718,14 @@ public class FurnitureJSON {
 
     public void setDimensions(Dimensions dimensions) {
         this.dimensions = dimensions;
+    }
+
+    public Action getAction() {
+        return action;
+    }
+
+    public void setAction(Action action) {
+        this.action = action;
     }
 
     public List<Integer> getDirections() {

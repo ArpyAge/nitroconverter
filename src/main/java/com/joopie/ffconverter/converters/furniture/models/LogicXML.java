@@ -81,6 +81,29 @@ public class LogicXML {
         }
     }
 
+    public static class Action {
+        private String link;
+        private Integer startState;
+
+        @XmlAttribute
+        public String getLink() {
+            return link;
+        }
+
+        public void setLink(String link) {
+            this.link = link;
+        }
+
+        @XmlAttribute
+        public Integer getStartState() {
+            return startState;
+        }
+
+        public void setStartState(Integer startState) {
+            this.startState = startState;
+        }
+    }
+
     public static class Mask {
         private String type;
 
@@ -109,6 +132,7 @@ public class LogicXML {
 
     private String type;
     private Model model;
+    private Action action;
     private Mask mask;
     private Credits credits;
 
@@ -128,6 +152,15 @@ public class LogicXML {
 
     public void setModel(Model model) {
         this.model = model;
+    }
+
+    @XmlElement
+    public Action getAction() {
+        return action;
+    }
+
+    public void setAction(Action action) {
+        this.action = action;
     }
 
     @XmlElement

@@ -1,9 +1,11 @@
 package com.joopie.ffconverter.converters.effect;
 
+import com.joopie.ffconverter.HabboAssetSWF;
 import com.joopie.ffconverter.converters.effect.models.AnimationXML;
 import com.joopie.ffconverter.converters.effect.models.EffectJSON;
 import com.joopie.ffconverter.converters.effect.models.ManifestXML;
 import com.joopie.ffconverter.downloader.effect.EffectDownloader;
+import com.jpexs.decompiler.flash.tags.base.ImageTag;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,24 +18,29 @@ public class EffectJSONMapper {
 
     public static final String MUST_START_WITH = "h_";
 
-    public EffectJSON mapXML(String name, ManifestXML manifestXML, AnimationXML animationXML) {
+    public EffectJSON mapXML(HabboAssetSWF habboAssetSWF, ManifestXML manifestXML, AnimationXML animationXML) {
+        String name = habboAssetSWF.getDocumentClass();
         EffectJSON result = new EffectJSON();
         result.setName(name);
         result.setType(EffectDownloader.types.get(name));
-        this.mapManifestXML(manifestXML, result);
+        this.mapManifestXML(habboAssetSWF, manifestXML, result);
         this.mapAnimationXML(animationXML, result);
         return result;
     }
 
-    private void mapManifestXML(ManifestXML manifestXML, EffectJSON output) {
+    private void mapManifestXML(HabboAssetSWF habboAssetSWF, ManifestXML manifestXML, EffectJSON output) {
         Map<String, EffectJSON.Asset> assets = new HashMap<String, EffectJSON.Asset>();
         for (ManifestXML.Library.Asset assetXML : manifestXML.getLibrary().getAssets()) {
             if(assetXML.getName().startsWith(MUST_START_WITH)) {
+
                 EffectJSON.Asset asset = new EffectJSON.Asset();
                 asset.setName(assetXML.getName());
                 if(assetXML.getParam() != null && !assetXML.getParam().getValue().isEmpty()) {
                     asset.setX(Integer.parseInt(assetXML.getParam().getValue().split(",")[0]));
                     asset.setY(Integer.parseInt(assetXML.getParam().getValue().split(",")[1]));
+                }
+                if(imageSource.containsKey(assetXML.getName())) {
+                    asset.setSource(imageSource.get(assetXML.getName()));
                 }
 
                 assets.put(assetXML.getName(), asset);
@@ -130,6 +137,7 @@ public class EffectJSONMapper {
                         bodyparts.add(bodypart);
                     }
                 }
+                if(frameXML.getRepeats() != null) frame.setRepeats(frameXML.getRepeats());
                 frame.setFxs(fxs);
                 frame.setBodyparts(bodyparts);
                 frames.add(frame);

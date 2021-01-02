@@ -75,6 +75,14 @@ public class FurnitureJSONMapper {
                 directions.add(directionXML.getId());
             }
         }
+        if(logicXML.getAction() != null) {
+            FurnitureJSON.Action action = new FurnitureJSON.Action();
+
+            if(logicXML.getAction().getLink() != null) action.setLink(logicXML.getAction().getLink());
+            if(logicXML.getAction().getStartState() != null) action.setStartState(logicXML.getAction().getStartState());
+
+            output.setAction(action);
+        }
         if(logicXML.getMask() != null) {
             output.setMaskType(logicXML.getMask().getType());
         }
