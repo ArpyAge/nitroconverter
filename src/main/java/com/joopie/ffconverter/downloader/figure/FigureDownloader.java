@@ -6,6 +6,7 @@ import com.joopie.ffconverter.downloader.IDownloader;
 import com.joopie.ffconverter.downloader.figure.resources.Figuremap;
 import com.joopie.ffconverter.downloader.figure.resources.FiguremapParser;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -51,12 +52,20 @@ public class FigureDownloader implements IDownloader {
 
     @Override
     public void prepareDownloader(List<Callable<Object>> downloadTasks) throws Exception {
+        File outputFolderFigure = new File(FFConverter.getConfig().getValue("output.folder.figure"));
         Figuremap figuremap = FiguremapParser.getFiguremap();
         if (figuremap != null) {
             List<String> itemClassNames = new ArrayList<>();
 
             for (Figuremap.Lib lib : figuremap.getLib()) {
                 String className = lib.getId().split("\\*")[0];
+                if(className.equals("hh_human_fx")) {
+                    continue;
+                }
+                File assetOuputFolder = new File(outputFolderFigure + "/" + className);
+                if (assetOuputFolder.isDirectory()) {
+                    continue;
+                }
                 if (!types.containsKey(className)) {
                     downloadTasks.add(Executors.callable(new FigureDownloader.FigureRunnableDownloader(this.callback, className)));
                 }

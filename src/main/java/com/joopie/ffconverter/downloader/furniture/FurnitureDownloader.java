@@ -6,6 +6,7 @@ import com.joopie.ffconverter.downloader.IDownloader;
 import com.joopie.ffconverter.downloader.furniture.resources.Furnidata;
 import com.joopie.ffconverter.downloader.furniture.resources.FurnidataParser;
 
+import java.io.File;
 import java.lang.reflect.Executable;
 import java.net.URL;
 import java.util.ArrayList;
@@ -60,11 +61,16 @@ public class FurnitureDownloader implements IDownloader {
 
     @Override
     public void prepareDownloader(List<Callable<Object>> downloadTasks) throws Exception {
+        File outputFolderFurniture = new File(FFConverter.getConfig().getValue("output.folder.furniture"));
         Furnidata furnidata = FurnidataParser.getFurnidata();
         if (furnidata != null) {
             List<String> itemClassNames = new ArrayList<>();
             for (Furnidata.Roomitemtypes.Furnitype item : furnidata.getRoomitemtypes().getFurnitype()) {
                 String className = item.getClassname().split("\\*")[0];
+                File assetOuputFolder = new File(outputFolderFurniture + "/" + className);
+                if (assetOuputFolder.isDirectory()) {
+                    continue;
+                }
                 if (!itemClassNames.contains(className)) {
                     downloadTasks.add(Executors.callable(new FurnitureRunnableDownloader(this.callback, item.getRevision(), className)));
                 }
@@ -74,6 +80,10 @@ public class FurnitureDownloader implements IDownloader {
 
             for (Furnidata.Wallitemtypes.Furnitype item : furnidata.getWallitemtypes().getFurnitype()) {
                 String className = item.getClassname().split("\\*")[0];
+                File assetOuputFolder = new File(outputFolderFurniture + "/" + className);
+                if (assetOuputFolder.isDirectory()) {
+                    continue;
+                }
                 if (!itemClassNames.contains(className)) {
                     downloadTasks.add(Executors.callable(new FurnitureRunnableDownloader(this.callback, item.getRevision(), className)));
                 }

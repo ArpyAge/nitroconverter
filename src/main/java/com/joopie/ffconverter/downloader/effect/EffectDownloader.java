@@ -6,6 +6,7 @@ import com.joopie.ffconverter.downloader.IDownloader;
 import com.joopie.ffconverter.downloader.effect.resources.Effectmap;
 import com.joopie.ffconverter.downloader.effect.resources.EffectmapParser;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -51,10 +52,15 @@ public class EffectDownloader  implements IDownloader {
 
     @Override
     public void prepareDownloader(List<Callable<Object>> downloadTasks) throws Exception {
+        File outputFolderEffect = new File(FFConverter.getConfig().getValue("output.folder.effect"));
         Effectmap effectmap = EffectmapParser.getEffectmap();
         if (effectmap != null) {
             for (Effectmap.Effect effect : effectmap.getEffect()) {
                 String className = effect.getLib();
+                File assetOuputFolder = new File(outputFolderEffect + "/" + className);
+                if (assetOuputFolder.isDirectory()) {
+                    continue;
+                }
                 if (!types.containsKey(className)) {
                     downloadTasks.add(Executors.callable(new EffectDownloader.EffectRunnableDownloader(this.callback, className)));
                 }

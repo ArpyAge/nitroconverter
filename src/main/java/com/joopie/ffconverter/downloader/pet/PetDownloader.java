@@ -5,6 +5,7 @@ import com.joopie.ffconverter.HabboAssetSWF;
 import com.joopie.ffconverter.downloader.IDownloader;
 import com.joopie.ffconverter.downloader.pet.resources.ExternalVars;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -54,6 +55,7 @@ public class PetDownloader implements IDownloader {
 
     @Override
     public void prepareDownloader(List<Callable<Object>> downloadTasks) throws Exception {
+        File outputFolderPet = new File(FFConverter.getConfig().getValue("output.folder.pet"));
         ExternalVars externalVars = new ExternalVars();
         String pets = externalVars.getValue("pet.configuration");
         if (!pets.equals("")) {
@@ -61,6 +63,10 @@ public class PetDownloader implements IDownloader {
             String[] petNames = pets.split(",");
 
             for (String pet : petNames) {
+                File assetOuputFolder = new File(outputFolderPet + "/" + pet);
+                if (assetOuputFolder.isDirectory()) {
+                    continue;
+                }
                 if (!itemClassNames.contains(pet)) {
                     downloadTasks.add(Executors.callable(new PetDownloader.PetRunnableDownloader(this.callback, pet)));
                 }
